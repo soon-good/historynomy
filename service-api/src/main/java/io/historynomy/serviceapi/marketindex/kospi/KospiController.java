@@ -2,6 +2,7 @@ package io.historynomy.serviceapi.marketindex.kospi;
 
 import io.historynomy.serviceapi.marketindex.kospi.mongo.Kospi;
 import io.historynomy.serviceapi.marketindex.kospi.repository.KospiRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -11,6 +12,7 @@ public class KospiController {
 
 	private KospiRepository kospiRepository;
 
+	@Autowired
 	public KospiController(KospiRepository kospiRepository){
 		this.kospiRepository = kospiRepository;
 	}
@@ -20,6 +22,9 @@ public class KospiController {
 		Kospi k = new Kospi("코스피", 3500D);
 
 		Mono<Kospi> dat = kospiRepository.insert(k);
+
+		dat.subscribe(s-> System.out.println(s.toString()));
+
 		return dat;
 	}
 }
