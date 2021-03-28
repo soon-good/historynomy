@@ -1,9 +1,7 @@
-package io.historynomy.serviceapi.marketindex.kospi;
+package io.historynomy.serviceapi.marketindex.kospi.mongo;
 
 import java.time.LocalDateTime;
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
