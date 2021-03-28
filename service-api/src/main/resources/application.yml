@@ -9,11 +9,12 @@ spring:
   profiles: testdocker
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   data:
     mongodb:
       uri: mongodb://mongoadmin:1111@localhost:27039
       authentication-database: admin
+      database: market_index
 #      username: mongoadmin
 #      password: 1111
 #      host: localhost
