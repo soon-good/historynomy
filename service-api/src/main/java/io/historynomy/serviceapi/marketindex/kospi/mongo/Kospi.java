@@ -1,5 +1,6 @@
 package io.historynomy.serviceapi.marketindex.kospi.mongo;
 
+import java.time.LocalDateTime;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,23 +13,22 @@ public class Kospi {
 	@Id
 	private String id;
 
-	@Field(name = "TIME")
-	private String time;
-//	private LocalDateTime localDateTime;
+	@Field(name = "time")
+	private LocalDateTime time;
 
-	@Field(name = "ITEM_NAME1")
+	@Field(name = "dataName")
 	private String dataName;
 
-	@Field(name = "DATA_VALUE")
+	@Field(name = "dataValue")
 	private Double dataValue;
 
-	@Field(name = "STAT_CODE")
+	@Field(name = "topCategory")
 	private String topCategory;
 
-	@Field(name = "ITEM_CODE1")
+	@Field(name = "midCategory")
 	private String midCategory;
 
-	@Field(name = "STAT_NAME")
+	@Field(name = "statDesc")
 	private String statDesc;
 
 

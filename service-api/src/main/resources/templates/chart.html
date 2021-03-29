@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Play History Nomy </title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    #chartdiv {
+      width: 100%;
+      height: 500px;
+      max-width: 100%;
+    }
+
+    #controls {
+      overflow: hidden;
+      padding-bottom: 3px;
+    }
+  </style>
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/plugins/rangeSelector.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  <div id="controls"></div>
+  <div id="chartdiv"></div>
+</head>
+<body>
+
+<script type="text/javascript">
+  // Themes begin
+  am4core.useTheme(am4themes_animated);
+  // Themes end
+
+  window.onload = function (e) {
+      console.log(e);
+      getAllKospi();
+  }
+
+  function getAllKospi() {
+      let targetUrl = "http://localhost/market_index/kospi/all"
+
+      fetch(targetUrl, {method: 'get'})
+      .then(resp => {
+          return resp.json()
+      })
+      .then(data => {
+          console.log("data :: ", data)
+          renderChart(data)
+      })
+      .catch(excResp => {
+          console.log(excResp)
+      })
+  }
+
+  function renderChart(jsonResult) {
+      var data = jsonResult;
+
+      var chart = am4core.create("chartdiv", am4charts.XYChart);
+      chart.padding(0, 15, 0, 15);
+      chart.colors.step = 3;
+
+      chart.data = data;
+      // the following line makes value axes to be arranged vertically.
+      chart.leftAxesContainer.layout = "vertical";
+
+      // uncomment this line if you want to change order of axes
+      //chart.bottomAxesContainer.reverseOrder = true;
+
+      var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.renderer.grid.template.location = 0;
+      dateAxis.renderer.ticks.template.length = 8;
+      dateAxis.renderer.ticks.template.strokeOpacity = 0.1;
+      dateAxis.renderer.grid.template.disabled = true;
+      dateAxis.renderer.ticks.template.disabled = false;
+      dateAxis.renderer.ticks.template.strokeOpacity = 0.2;
+      dateAxis.renderer.minLabelPosition = 0.01;
+      dateAxis.renderer.maxLabelPosition = 0.99;
+      dateAxis.keepSelection = true;
+
+      dateAxis.groupData = true;
+      dateAxis.minZoomCount = 5;
+
+      // these two lines makes the axis to be initially zoomed-in
+      // dateAxis.start = 0.7;
+      // dateAxis.keepSelection = true;
+
+      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.tooltip.disabled = true;
+      valueAxis.zIndex = 1;
+      valueAxis.renderer.baseGrid.disabled = true;
+      // // height of axis
+      // valueAxis.height = am4core.percent(65);
+
+      valueAxis.renderer.gridContainer.background.fill = am4core.color("#000000");
+      valueAxis.renderer.gridContainer.background.fillOpacity = 0.05;
+      valueAxis.renderer.inside = true;
+      valueAxis.renderer.labels.template.verticalCenter = "bottom";
+      valueAxis.renderer.labels.template.padding(2, 2, 2, 2);
+
+      //valueAxis.renderer.maxLabelPosition = 0.95;
+      valueAxis.renderer.fontSize = "0.8em"
+
+      var series1 = chart.series.push(new am4charts.LineSeries());
+      series1.dataFields.dateX = "time";
+      series1.dataFields.valueY = "dataValue";
+      // series1.dataFields.valueYShow = "changePercent";
+      // series1.tooltipText = "{name}";
+      series1.name = "코스피";
+      series1.tooltip.getFillFromObject = false;
+      series1.tooltip.getStrokeFromObject = true;
+      series1.tooltip.background.fill = am4core.color("#fff");
+      series1.tooltip.background.strokeWidth = 2;
+      series1.tooltip.label.fill = series1.stroke;
+
+
+      var scrollbarX = new am4charts.XYChartScrollbar();
+      scrollbarX.series.push(series1);
+      scrollbarX.marginBottom = 20;
+
+      var sbSeries = scrollbarX.scrollbarChart.series.getIndex(0);
+      sbSeries.dataFields.valueYShow = undefined;
+      chart.scrollbarX = scrollbarX;
+
+      // Add range selector
+      var selector = new am4plugins_rangeSelector.DateAxisRangeSelector();
+      selector.container = document.getElementById("controls");
+      selector.axis = dateAxis;
+  }
+  
+</script>
+
+
+</body>
+</html>
