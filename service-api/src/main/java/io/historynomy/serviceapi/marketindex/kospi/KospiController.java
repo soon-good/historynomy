@@ -1,30 +1,23 @@
 package io.historynomy.serviceapi.marketindex.kospi;
 
-import io.historynomy.serviceapi.marketindex.kospi.mongo.Kospi;
-import io.historynomy.serviceapi.marketindex.kospi.repository.KospiRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 public class KospiController {
 
-	private KospiRepository kospiRepository;
+	private final KospiService kospiService;
 
 	@Autowired
-	public KospiController(KospiRepository kospiRepository){
-		this.kospiRepository = kospiRepository;
+	public KospiController(KospiService kospiService){
+		this.kospiService = kospiService;
 	}
 
-	@GetMapping("/kospi/test")
-	public Mono<Kospi> kospiTest(){
-		Kospi k = new Kospi("코스피", 3500D);
-
-		Mono<Kospi> dat = kospiRepository.insert(k);
-
-		dat.subscribe(s-> System.out.println(s.toString()));
-
-		return dat;
+	@GetMapping("/market_index/kospi/all")
+	public List<KospiDto> getKospiList(){
+		List<KospiDto> allKospiHistory = kospiService.findAll();
+		return allKospiHistory;
 	}
 }
