@@ -107,17 +107,40 @@
       series1.dataFields.valueY = "dataValue";
       // series1.dataFields.valueYShow = "changePercent";
       // series1.tooltipText = "{name}";
-      series1.name = "코스피";
-      series1.tooltip.getFillFromObject = false;
-      series1.tooltip.getStrokeFromObject = true;
-      series1.tooltip.background.fill = am4core.color("#fff");
-      series1.tooltip.background.strokeWidth = 2;
-      series1.tooltip.label.fill = series1.stroke;
+      series1.strokeWidth = 3;
+      series1.minBullerDistance = 10;
+      series1.tooltipText = "코스피 : {valueY}";
+      series1.tooltip.pointerOrientation = "vertical"
+      series1.tooltip.background.cornerRadius = 20;
+      series1.tooltip.background.fillOpacity = 0.5;
+      series1.tooltip.label.padding(12,12,12,12);
+
+      // var series2 = chart.series.push(new am4charts.LineSeries());
+      // series2.dataFields.dateX = "time";
+      // series2.dataFields.valueY = "dataValue";
+      // // series2.dataFields.valueYShow = "changePercent";
+      // // series2.tooltipText = "{name}";
+      // series2.strokeWidth = 3;
+      // series2.minBullerDistance = 10;
+      // series2.tooltipText = "테스트1 : {valueY}";
+      // series2.tooltip.pointerOrientation = "vertical"
+      // series2.tooltip.background.cornerRadius = 20;
+      // series2.tooltip.background.fillOpacity = 0.5;
+      // series2.tooltip.label.padding(12,12,12,12);
 
 
       var scrollbarX = new am4charts.XYChartScrollbar();
       scrollbarX.series.push(series1);
       scrollbarX.marginBottom = 20;
+
+      chart.cursor = new am4charts.XYCursor();
+      chart.cursor.xAxis = dateAxis;
+      chart.cursor.snapToSeries = series1;
+
+
+      // var scrollbarX = new am4charts.XYChartScrollbar();
+      // scrollbarX.series.push(series1);
+      // scrollbarX.marginBottom = 20;
 
       var sbSeries = scrollbarX.scrollbarChart.series.getIndex(0);
       sbSeries.dataFields.valueYShow = undefined;
