@@ -6,7 +6,8 @@ import json
 import urllib3
 from pymongo import MongoClient
 
-date_formatter = '%Y%m%d'
+date_formatter_yyyymmdd = '%Y%m%d'
+date_formatter_yyyymm = '%Y%m'
 
 COLUMN_LIST = [
         'STAT_NAME',  'STAT_CODE',  'ITEM_CODE1', 'ITEM_CODE2', 'ITEM_CODE3',
@@ -17,7 +18,7 @@ api_key = '--'
 
 
 if __name__ == '__main__':
-    korbank_url = "http://ecos.bok.or.kr/api/StatisticSearch/{}/json/kr/1/50000/064Y001/DD/19900101/20201231/0001000" \
+    korbank_url = "http://ecos.bok.or.kr/api/StatisticSearch/{}/json/kr/1/50000/028Y015/MM/196001/202103/1080000" \
         .format(api_key)
 
     print(" ####### request URL #######")
@@ -39,13 +40,13 @@ if __name__ == '__main__':
 
     for e in arr_data:
         # datetime 타입으로 변환 ( strptime :: str 'parse' time )
-        e['TIME'] = datetime.datetime.strptime(e['TIME'], date_formatter)
+        e['TIME'] = datetime.datetime.strptime(e['TIME'], date_formatter_yyyymm)
 
         dict_dump = {
             'statDesc': e['STAT_NAME'],
             'midCategory': e['ITEM_CODE1'],
             'topCategory': e['STAT_CODE'],
-            'dataName': e['ITEM_NAME1'],
+            'dataName': 'KOSPI (월별,평균)',
             'dataValue': float(e['DATA_VALUE']),
             'time': e['TIME'].fromisoformat(e['TIME'].isoformat())
         }
