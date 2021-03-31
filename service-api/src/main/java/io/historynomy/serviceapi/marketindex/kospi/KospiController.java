@@ -1,5 +1,6 @@
 package io.historynomy.serviceapi.marketindex.kospi;
 
+import io.historynomy.serviceapi.marketindex.dto.PriceDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,8 @@ public class KospiController {
 	}
 
 	@GetMapping("/market_index/kospi/all")
-	public List<KospiDto> getKospiList(){
-		List<KospiDto> allKospiHistory = kospiService.findAll();
+	public List<PriceDto> getKospiList(){
+		List<PriceDto> allKospiHistory = kospiService.findAll();
 		return allKospiHistory;
 	}
 }
