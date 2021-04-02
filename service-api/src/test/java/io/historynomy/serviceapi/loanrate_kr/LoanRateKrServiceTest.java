@@ -1,9 +1,9 @@
-package io.historynomy.serviceapi.kospi.tdd;
+package io.historynomy.serviceapi.loanrate_kr;
 
-import io.historynomy.serviceapi.marketindex.dto.IndexDto;
-import io.historynomy.serviceapi.marketindex.kospi.KospiService;
-import io.historynomy.serviceapi.marketindex.kospi.mongo.Kospi;
-import io.historynomy.serviceapi.marketindex.kospi.mongo.KospiRepository;
+import io.historynomy.serviceapi.marketindex.dto.PercentDto;
+import io.historynomy.serviceapi.marketindex.loanrate_kr.LoanRateKrService;
+import io.historynomy.serviceapi.marketindex.loanrate_kr.mongo.LoanRateKr;
+import io.historynomy.serviceapi.marketindex.loanrate_kr.mongo.LoanRateKrRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class KospiServiceTest {
+public class LoanRateKrServiceTest {
 
 	@Autowired
-	KospiService kospiService;
+	LoanRateKrService loanRateKrService;
 
 	@Autowired
-	KospiRepository kospiRepository;
+	LoanRateKrRepository loanRateKrRepository;
 
 	@Test
 	void 테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다(){
@@ -31,13 +31,13 @@ public class KospiServiceTest {
 		LocalDateTime start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyyMMdd")).atStartOfDay();
 		LocalDateTime end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd")).atStartOfDay();
 
-		List<Kospi> byTime = kospiRepository.findAllByTimeBetween(start, end);
+		List<LoanRateKr> byTime = loanRateKrRepository.findAllByTimeBetween(start, end);
 
-		List<IndexDto> result = byTime.stream().map(kospi -> {
-			return IndexDto.builder()
-				.time(kospi.getTime())
-				.dataName(kospi.getDataName())
-				.dataValue(kospi.getDataValue())
+		List<PercentDto> result = byTime.stream().map(l -> {
+			return PercentDto.builder()
+				.time(l.getTime())
+				.dataName(l.getDataName())
+				.dataValue(l.getDataValue())
 				.build();
 		}).collect(Collectors.toList());
 
@@ -53,7 +53,7 @@ public class KospiServiceTest {
 		LocalDateTime start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyyMMdd")).atStartOfDay();
 		LocalDateTime end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd")).atStartOfDay();
 
-		List<IndexDto> result = kospiService.findAllByTimeBetween(start, end);
+		List<PercentDto> result = loanRateKrService.findAllByTimeBetween(start, end);
 
 		Assertions.assertThat(result).isNotEmpty();
 	}

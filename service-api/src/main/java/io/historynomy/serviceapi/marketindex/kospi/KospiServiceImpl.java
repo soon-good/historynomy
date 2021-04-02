@@ -1,9 +1,9 @@
 package io.historynomy.serviceapi.marketindex.kospi;
 
-import io.historynomy.serviceapi.marketindex.dto.PriceDto;
+import io.historynomy.serviceapi.marketindex.dto.IndexDto;
 import io.historynomy.serviceapi.marketindex.kospi.mongo.Kospi;
 import io.historynomy.serviceapi.marketindex.kospi.mongo.KospiRepository;
-import io.historynomy.serviceapi.types.MarketIndexType;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,40 @@ public class KospiServiceImpl implements KospiService{
 
 	private final KospiRepository kospiRepository;
 
-	private final MarketIndexType INDEX_TYPE = MarketIndexType.KOSPI;
-
 	@Autowired
 	public KospiServiceImpl(KospiRepository kospiRepository){
 		this.kospiRepository = kospiRepository;
 	}
 
 	@Override
-	public List<PriceDto> findAll(){
+	public List<IndexDto> findAll(){
 		List<Kospi> all = kospiRepository.findAll();
 
-		List<PriceDto> results = all.stream()
+		List<IndexDto> results = all.stream()
 			.map(kospi -> {
-				return (PriceDto) INDEX_TYPE.mapToDto().apply(kospi);
+				return IndexDto.builder()
+					.time(kospi.getTime())
+					.dataName(kospi.getDataName())
+					.dataValue(kospi.getDataValue())
+					.build();
 			})
 			.collect(Collectors.toList());
 
 		return results;
+	}
+
+	@Override
+	public List<IndexDto> findAllByTimeBetween(LocalDateTime startDate, LocalDateTime endDate) {
+		List<Kospi> result = kospiRepository.findAllByTimeBetween(startDate, endDate);
+
+		return result.stream()
+			.map(kospi -> {
+				return IndexDto.builder()
+					.time(kospi.getTime())
+					.dataName(kospi.getDataName())
+					.dataValue(kospi.getDataValue())
+					.build();
+			})
+			.collect(Collectors.toList());
 	}
 }
