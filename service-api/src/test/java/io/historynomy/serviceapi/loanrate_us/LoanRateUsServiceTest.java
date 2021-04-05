@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,8 @@ public class LoanRateUsServiceTest {
 	LoanRateUsRepository loanRateUsRepository;
 
 	@Test
-	void 테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다(){
+	@DisplayName("Repository_테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다")
+	void Repository_테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다(){
 		String startDate = "19600101";
 		String endDate = "20210401";
 
@@ -46,7 +48,8 @@ public class LoanRateUsServiceTest {
 	}
 
 	@Test
-	void 메서드_테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다(){
+	@DisplayName("Service_테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다")
+	void Service_테스트_findAllByTimeBetween_데이터가_비어있지_않아야한다(){
 		String startDate = "19600101";
 		String endDate = "20210401";
 
