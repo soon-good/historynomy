@@ -18,7 +18,7 @@ public class LoanRateKrController {
 		this.loanRateKrService = loanRateKrService;
 	}
 
-	@GetMapping("/market_index/loan_rate_kr")
+	@GetMapping("/market-index/loan_rate_kr")
 	public List<PercentDto> getLoanRateKr(
 		@RequestParam("startDate")LocalDateTime startDate, @RequestParam("endDate") LocalDateTime endDate){
 
