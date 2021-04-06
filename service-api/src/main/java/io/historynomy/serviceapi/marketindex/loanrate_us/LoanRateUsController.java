@@ -18,7 +18,7 @@ public class LoanRateUsController {
 		this.loanRateUsService = loanRateUsService;
 	}
 
-	@GetMapping("/market_index/loan_rate_us")
+	@GetMapping("/market-index/loan_rate_us")
 	public List<PercentDto> getAllByTimeBetween(
 		@RequestParam("startDate") LocalDateTime startDate, @RequestParam("endDate")LocalDateTime endDate
 	){

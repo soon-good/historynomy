@@ -18,13 +18,13 @@ public class KospiController {
 		this.kospiService = kospiService;
 	}
 
-	@GetMapping("/market_index/kospi/all")
+	@GetMapping("/market-index/kospi/all")
 	public List<IndexDto> findKospiList(){
 		List<IndexDto> allKospiHistory = kospiService.findAll();
 		return allKospiHistory;
 	}
 
-	@GetMapping("/market_index/kospi")
+	@GetMapping("/market-index/kospi")
 	public List<IndexDto> findAllByTimeBetween(
 		@RequestParam("startDate") LocalDateTime startDate, @RequestParam("endDate") LocalDateTime endDate
 	){
