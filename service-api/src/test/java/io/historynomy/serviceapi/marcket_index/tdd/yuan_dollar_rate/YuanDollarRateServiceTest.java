@@ -1,4 +1,4 @@
-package io.historynomy.serviceapi.yuan_dollar_rate;
+package io.historynomy.serviceapi.marcket_index.tdd.yuan_dollar_rate;
 
 import io.historynomy.serviceapi.marketindex.dto.PriceDto;
 import io.historynomy.serviceapi.marketindex.yuan_dollar_rate.YuanDollarRateService;

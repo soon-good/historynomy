@@ -1,4 +1,4 @@
-package io.historynomy.serviceapi.won_dollar_rate;
+package io.historynomy.serviceapi.marcket_index.tdd.won_dollar_rate;
 
 import io.historynomy.serviceapi.marketindex.dto.PriceDto;
 import io.historynomy.serviceapi.marketindex.won_dollar_rate.WonDollarRateService;
