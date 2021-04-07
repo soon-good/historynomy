@@ -1,4 +1,4 @@
-package io.historynomy.serviceapi.kospi.tdd;
+package io.historynomy.serviceapi.marcket_index.tdd.kospi.tdd;
 
 import io.historynomy.serviceapi.marketindex.dto.IndexDto;
 import io.historynomy.serviceapi.marketindex.kospi.KospiService;
